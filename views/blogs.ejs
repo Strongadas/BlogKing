@@ -1,0 +1,176 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+
+            <!-- Shuffle posts array randomly -->
+            <% 
+                function shuffleArray(array) {
+                    for (let i = array.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [array[i], array[j]] = [array[j], array[i]];
+                    }
+                }
+                shuffleArray(posts);
+            %>
+
+            <!-- Loop through shuffled posts -->
+            <% for (let i = 0; i < posts.length; i++) { %>
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                
+
+                                <% if (posts[i].authorImg) { %>
+                                    <img src="/uploads/<%= posts[i].authorImg %>" alt="PostImage" class="rounded-circle mr-2" style="width: 40px; height: 40px;">
+                                  <% } else { %>
+                                    <!-- Alternative content goes here -->
+                                    <img src="/images/user.png" alt="Profile Image" class="rounded-circle mr-2" style="width: 40px; height: 40px;">
+                                  <% } %>
+                                <strong>@<%= posts[i].author %></strong>
+                            </div>
+                            <small><%= posts[i].createdAt %></small>
+                        </div>
+                        <hr>
+                        <h2 class="h4"><%= posts[i].title %></h2>
+                        <p class="mb-3"><%= posts[i].content %></p>
+                        <div>
+                            
+                           
+                            <div class="container text-center">
+                                <% if (posts[i].image) { %>
+                                  <img src="/uploads/<%= posts[i].image %>" alt="PostImage" class="img-fluid img-thumbnail rounded" style="max-height: 300px;">
+                                <% } else { %>
+                                  <!-- Alternative content goes here -->
+                                  
+                                <% } %>
+                              </div>
+                              
+                          <br>
+
+                        </div>
+
+                        <small class="text-muted"><strong>Published on:</strong> <%= posts[i].createdAt %></small>
+
+                        <!-- Like and Comment buttons with icons -->
+                        <div class="mt-3 d-flex justify-content-between">
+                            <div>
+                               
+                                <a  class="btn btn-link like-button">
+                                    <i class="fa-regular fa-thumbs-up fa-2xl .fa-heart ml-2" style="color: #0433ff;" data-post-id="<%= posts[i]._id %>"></i>
+                                </a>
+                                
+
+                                <a id="openCommentsModal<%= i %>" class="btn btn-outline-primary btn-sm ml-2" href="#" data-toggle="modal" data-target="#commentsModal<%= i %>" data-post-id="<%= posts[i]._id %>"> <i class="fa-regular fa-comment fa-lg"></i> Comment </a>
+
+
+                            </div>
+                            <div class="text-muted"><%= posts[i].likes %> Likes</div>
+                            
+                        </div>
+
+                        <!-- Comment section modal -->
+                        <div class="modal fade" id="commentsModal<%= i %>" tabindex="-1" aria-labelledby="commentsModalLabel<%= i %>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="commentsModalLabel<%= i %>">Comments</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Display comments in a more compact style -->
+                                        <% if (posts[i].comments && posts[i].comments.length > 0) { %>
+                                            <ul class="list-unstyled mb-0">
+                                                <% for (let j = 0; j < posts[i].comments.length; j++) { %>
+                                                    <li class="mb-2">
+                                                        <strong>@<%= posts[i].comments[j].user %>:</strong> <%= posts[i].comments[j].text %>
+                                                    </li>
+                                                <% } %>
+                                            </ul>
+                                        <% } else { %>
+                                            <p>No comments yet.</p>
+                                        <% } %>
+
+                                        <form action="/add-comment" method="post" class="mt-3">
+                                            <div class="form-group mb-2">
+                                              <input type="text" class="form-control" name="comment" placeholder="Add a comment...">
+                                           <input type="hidden" name="postId" id="postIdInput<%= i %>" value="">
+                                            </div>
+                                            <button type="button" class="btn btn-outline-success btn-sm" id="comment-submit">Comment</button>
+                                          </form>
+                                          
+                                        
+                                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %> 
+        </div>
+    </div>
+</div>
+
+<!-- Add this script at the end of your body to include Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/59aa97c7a1.js" crossorigin="anonymous"></script>
+
+
+<script>
+ 
+ $(document).ready(function() {
+  // Add a click event listener to the anchor element
+  $('[id^="openCommentsModal"]').click(function() {
+    // Extract the modal ID from the anchor's data-target attribute
+    const modalId = $(this).data("target");
+    
+    // Extract the post ID from the anchor's data-post-id attribute
+    const postID = $(this).data("post-id");
+
+    // Set the input field value in the modal to the post ID
+    $(modalId).find('#postIdInput' + modalId.substring(13)).val(postID);
+
+    // Open the corresponding modal
+    $(modalId).modal("show");
+  });
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const likeButtons = document.querySelectorAll(".like-button");
+
+  likeButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const icon = this;
+      if (icon.classList.contains("fa-regular")) {
+        // Toggle to solid heart
+        icon.classList.remove("fa-regular");
+        icon.classList.add("fa-solid");
+        //icon.style.color = "#ff0000"; // Change color to red (if needed)
+      } else if (icon.classList.contains("fa-solid")) {
+        // Toggle back to regular heart
+        icon.classList.remove("fa-solid");
+        icon.classList.add("fa-regular");
+        icon.style.color = "#0433ff"; // Change color to blue (if needed)
+      }
+    });
+  });
+});
+
+   
+
+
+
+
+
+
+
+    
+   
+</script>
+

@@ -1,0 +1,36 @@
+<%- include("partials/header-user"); -%>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            
+            <!-- Form for updating users details -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <form action="/profile" method="post" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Username</label>
+                            <input class="form-control" id="name" name="name" value="<%= user.name %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Email</label>
+                            <input class="form-control" id="username" name="username" value="<%= user.username %>">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="profile-img" class="form-label">Profile Picture</label>
+                            <input type="file" class="form-control" id="profile-img" name="profile-img" >
+                        </div>
+                        <button type="submit" class="btn btn-outline-success">Update </button>
+                        <a href="/dash"><button type="submit" class="btn btn-outline-danger">Cancel </button></a>
+                    </form>
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>
+
+
+
+
+ <%- include("partials/footer"); -%>

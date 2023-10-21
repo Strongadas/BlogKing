@@ -1,0 +1,28 @@
+<%- include("partials/header"); -%>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+
+            <!-- Form for adding a new post -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <form action="/post" method="post" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label for="blogContent" class="form-label">What is on your mind?</label>
+                            <textarea class="form-control" id="blogContent" name="blogContent" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="blogImage" class="form-label">Photo/Video</label>
+                            <input type="file" class="form-control" id="blogImage" name="blogImage" >
+                        </div>
+                        <button type="submit" class="btn btn-outline-success">Post Blog</button>
+                    </form>
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>
+  
+
+    <%- include("partials/footer"); -%>

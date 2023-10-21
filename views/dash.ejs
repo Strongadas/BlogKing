@@ -1,0 +1,88 @@
+<%- include("partials/header-user"); -%>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            
+            <!-- Form for adding a new post -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <form action="/post" method="post" enctype="multipart/form-data">
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                
+
+                                <% if (user.profileImage) { %>
+                                    <img src="/uploads/<%= user.profileImage %>" alt="PostImage" class="rounded-circle mr-2" style="width: 40px; height: 40px;">
+                                  <% } else { %>
+                                    <!-- Alternative content goes here -->
+                                    <img src="/images/user.png" alt="Profile Image" class="rounded-circle mr-2" style="width: 40px; height: 40px;">
+                                  <% } %> <span></span>
+                                <strong>@<%= user.name %></strong>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="mb-3">
+                            
+                            <textarea class="form-control" id="blogContent" name="blogContent" rows="3" required placeholder="What is on your mind?"></textarea >
+                        </div>
+                        <div class="mb-3 padding">
+                            <label for="blogImage" class="form-label click ">
+                                <img height="24" width="24" alt="" class="xz74otr" referrerpolicy="origin-when-cross-origin" src="https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/Ivw7nhRtXyo.png">
+
+                                Photo/Video</label>
+
+                                <a href="#">
+                                    <label for="live" class="form-label click padding1">
+                                        <img height="24" width="24" alt="" class="xz74otr" referrerpolicy="origin-when-cross-origin" src="https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/c0dWho49-X3.png"> Live Video
+                                    </label>
+                                </a>
+                            <input type="file" class="form-control" id="blogImage" name="blogImage" >
+                            
+                        </div>
+                        <button type="submit" class="btn btn-outline-success " id="btn">Post Blog</button>
+                    </form>
+                </div>
+            </div>
+            </div>
+        
+            </div>
+            
+            </div>
+
+           
+              
+
+<%- include ("blogs") %>   
+
+
+
+
+
+
+
+
+<%- include("partials/footer"); -%>
+
+<script>
+  const blogContent = document.getElementById('blogContent');
+const btn = document.getElementById('btn');
+
+blogContent.addEventListener('input', () => {
+    if (blogContent.value.trim() === "") {
+        btn.innerHTML = "Post Blog";
+        btn.style.background = "#fff"
+        btn.style.color = "#28a745"
+    } else {
+        btn.innerHTML = "You can post now";
+        btn.style.background = " #28a745"
+        btn.style.color = "#fff"
+    }
+});
+
+
+
+
+</script>

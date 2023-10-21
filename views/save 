@@ -1,0 +1,316 @@
+<div class="modal fade" id="commentsModal<%= i %>" tabindex="-1" aria-labelledby="commentsModalLabel<%= i %>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="commentsModalLabel<%= i %>">Comments</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Display comments in a more compact style -->
+                                        <% if (posts[i].comments && posts[i].comments.length > 0) { %>
+                                            <ul class="list-unstyled mb-0">
+                                                <% for (let j = 0; j < posts[i].comments.length; j++) { %>
+                                                    <li class="mb-2">
+                                                        <strong>@<%= posts[i].comments[j].user %>:</strong> <%= posts[i].comments[j].text %>
+                                                    </li>
+                                                <% } %>
+                                            </ul>
+                                        <% } else { %>
+                                            <p>No comments yet.</p>
+                                        <% } %>
+
+                                        <!-- Add your comment input form here -->
+                                        <form action="/add-comment" method="post" class="mt-3">
+                                            <div class="form-group mb-2">
+                                                <input type="text" class="form-control" name="comment" placeholder="Add a comment...">
+                                                <input type="hidden" name="postId" id="postIdInput" value="">
+                                            </div>
+                                            <button type="button" class="btn btn-outline-success btn-sm" id="comment-submit">Comment</button>
+                                        </form>
+                                        
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <header class="p-3 text-bg-dark">
+                            <div class="container">
+                              <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                                <a href="/dash" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                                  <img src="/images/logo2-removebg-preview.png" alt="Image Alt Text" class="me-2" width="40" height="32">
+                                  <span class="visually-hidden">VIP</span> <!-- Optional visually-hidden text for screen readers -->
+                              </a>
+                              
+                        
+                                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                                  <li><a href="/dash" class="nav-link px-2 text-white">Home</a></li>
+                                  <li><a href="/post" class="nav-link px-2 text-white">New Post</a></li>
+                                  <li><a href="/Mypost" class="nav-link px-2 text-white">My Posts</a></li>
+                                  <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                                  <li><a href="#" class="nav-link px-2 text-white">Contact</a></li>
+                                  
+                                </ul>
+                        
+                                
+                        
+                                <div class="dropdown text-end ">
+                    
+                                    <a href="#" class="d-block link-body-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <% if (user.profileImage) { %>
+                                        <img src="/uploads/<%= user.profileImage %>" alt="mdo" width="32" height="32" class="rounded-circle">
+                                      <% } else { %>
+                                        <!-- Alternative content goes here -->
+                                        <img src="/images/user-bg.png" alt="Profile Image" width="32" height="32" class="rounded-circle">
+                                      <% } %>
+                                      
+                                    </a>
+                                    <ul class="dropdown-menu text-small custom-dropdown-menu">
+                                      <li><a class="dropdown-item" href="#">My Posts</a></li>
+                                      <li><a class="dropdown-item" href="#">New Post...</a></li>
+                                      
+                                      <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                      <li><hr class="dropdown-divider"></li>
+                                      <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                                    </ul>
+                                  </div>
+                              </div>
+                            </div>
+                          </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          <div class="nav-mobile">
+                            <div class="navegation">
+                              <ul>
+                                <li class="list active ">
+                                  <a href="#">
+                                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                                    <span class="text">Home</span>
+                                  </a>
+                                </li>
+                                <li class="list">
+                                  <a href="#">
+                                    <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                                    <span class="text">Profile</span>
+                                  </a>
+                                </li>
+                                <li class="list">
+                                  <a href="#">
+                                    <span class="icon"><ion-icon name="videocam-outline"></ion-icon></span>
+                                    <span class="text">Live</span>
+                                  </a>
+                                </li>
+                                <li class="list">
+                                  <a href="#">
+                                    <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+                                    <span class="text">Messages</span>
+                                  </a>
+                                </li>
+                                <li class="list">
+                                  <a href="#">
+                                    <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                                    <span class="text">Settings</span>
+                                  </a>
+                                </li>
+                                <div class="indicator">
+                          
+                                </div>
+                              </ul>
+                            </div>
+                           </div>
+
+
+
+                           .nav-mobile{
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            
+                            background: var(--crl);
+                          }
+                          .navegation{
+                            width:100%;
+                            height: 70px;
+                            position: relative;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background-color: #e0e1e2;
+                            border-radius: 10px;
+                          }
+                          .navegation ul{
+                            display: flex;
+                            width: 350px;
+                          }
+                          .navegation ul li{
+                            position: relative;
+                            list-style: none;
+                            width: 70px;
+                            height: 70px;
+                            z-index: 1;
+                          }
+                          .navegation ul li a{
+                            position: relative;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex-direction: column;
+                            width: 100%;
+                            text-align: center;
+                            font-weight: 500;
+                          
+                          }
+                          .navegation ul li a .icon{
+                            position: relative;
+                            display: block;
+                            line-height: 75px;
+                            font-size: 1.5em;
+                            text-align: center;
+                            transition: 0.5s;
+                            color: var(--crl);
+                          }
+                          .navegation ul li.active a .icon{
+                            transform: translateY(-30.5px);
+                          }
+                          .navegation ul li a .text{
+                            position: absolute;
+                            color: var(--crl);
+                            font-size: 400;
+                            font-size: 0.75em;
+                            letter-spacing: 0.05em;
+                            transition: 0.5s;
+                            opacity: 0;
+                            transform: translateY(20px);
+                          
+                          }
+                          .navegation ul li.active a .text{
+                            opacity: 1;
+                            transform: translateY(10px);
+                          }
+                          .indicator{
+                            position: absolute;
+                            width: 70px;
+                            height: 70px;
+                            background:#1874e4;
+                            top: -50%;
+                            border-radius: 50%;
+                            border: 6px solid var(--crl);
+                            transition: 0.5s;
+                            
+                          }
+                          .indicator::before{
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: -20px;
+                            width: 20px;
+                            height: 20px;
+                            background: transparent;
+                            border-top-right-radius: 20px ;
+                            box-shadow: 1px -10px 0px 0px var(--crl);
+                          
+                          }
+                          .indicator::after{
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            right: -20px;
+                            width: 20px;
+                            height: 20px;
+                            background: transparent;
+                            border-top-left-radius: 20px ;
+                            box-shadow: -1px -10px 0px 0px var(--crl);
+                          
+                          }
+                          
+                          .navegation ul li:nth-child(1).active ~ .indicator {
+                            transform: translateX(calc(70px * 0));
+                          
+                          }
+                          .navegation ul li:nth-child(2).active ~ .indicator {
+                            transform: translateX(calc(70px * 1));
+                          
+                          }
+                          .navegation ul li:nth-child(3).active ~ .indicator {
+                            transform: translateX(calc(70px * 2));
+                          
+                          }
+                          .navegation ul li:nth-child(4).active ~ .indicator {
+                            transform: translateX(calc(70px * 3));
+                          
+                          }
+                          .navegation ul li:nth-child(5).active ~ .indicator {
+                            transform: translateX(calc(70px * 4));
+                          
+                          }
+
+
+
+
+
+
+
+                          <div class="header-right">
+
+
+                            <div class="profile-img">
+                             <a href="#">
+                              <% if (user.profileImage) { %>
+                                <img src="/uploads/<%= user.profileImage %>" alt="user-img" width="40" height="40" class="rounded-circle">
+                              <% } else { %>
+                                <!-- Alternative content goes here -->
+                                <img src="/images/user-bg.png" alt="Profile Image" width="32" height="32" class="rounded-circle">
+                              <% } %>
+                             </a>
+                            </div>
+                          </div>
+
+
+
+
+
+
+      <header class="p-3 text-bg-dark">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+              <img src="/images/logo2-removebg-preview.png" alt="Image Alt Text" class="me-2" width="40" height="32">
+              <span class="visually-hidden">VIP</span> <!-- Optional visually-hidden text for screen readers -->
+          </a>
+          
+    
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
+              <li><a href="/post" class="nav-link px-2 text-white">New Post</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">Contact</a></li>
+              
+            </ul>
+    
+            
+    
+            <div class="text-end">
+             <a href="/login"> <button type="button" class="btn btn-outline-light me-2">Login</button></a>
+              <a href="/register"><button type="button" class="btn btn-primary">Sign-up</button></a>
+            </div>
+          </div>
+        </div>
+      </header>
+      

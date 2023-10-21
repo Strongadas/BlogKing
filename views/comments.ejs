@@ -1,0 +1,22 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2>Comments for Post: <%= postId %></h2>
+            <ul class="list-unstyled">
+                <% comments.forEach(comment => { %>
+                    <li>
+                        <strong>@<%= comment.user %>:</strong> <%= comment.text %>
+                    </li>
+                <% }); %>
+            </ul>
+            <!-- Add your comment input form here -->
+            <form action="/add-comment" method="post" class="mt-3">
+                <div class="form-group mb-2">
+                    <input type="text" class="form-control" name="comment" placeholder="Add a comment...">
+                    <input type="hidden" name="postId" value="<%= postId %>">
+                </div>
+                <button type="submit" class="btn btn-outline-success btn-sm">Comment</button>
+            </form>
+        </div>
+    </div>
+</div>
